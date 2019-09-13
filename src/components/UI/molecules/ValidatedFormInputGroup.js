@@ -8,9 +8,11 @@ const ValidatedFormInputGroup = ({
   placeholder,
   value,
   onChange,
-  isValid,
+  isValid = true,
   invalidMessage,
-  isTextArea
+  isTextArea,
+  type,
+  required
 }) => {
   return (
     <FormGroup
@@ -28,6 +30,7 @@ const ValidatedFormInputGroup = ({
           onChange={onChange}
           intent={isValid ? Intent.NONE : Intent.DANGER}
           fill
+          required={required}
         />
       ) : (
         <InputGroup
@@ -36,6 +39,8 @@ const ValidatedFormInputGroup = ({
           value={value}
           onChange={onChange}
           intent={isValid ? Intent.NONE : Intent.DANGER}
+          type={type}
+          required={required}
         />
       )}
     </FormGroup>

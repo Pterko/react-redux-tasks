@@ -73,3 +73,10 @@ export const addTask = async (username, email, text) => {
 
   return result.message;
 };
+
+export const login = async (username, password) => {
+  const result = await Fetcher.post(`/login`, { username, password });
+  console.log("login", result);
+
+  return result.message;
+};

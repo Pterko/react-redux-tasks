@@ -3,11 +3,8 @@ import React, { useState } from "react";
 import { Dialog, Classes, Button, Intent } from "@blueprintjs/core";
 import styled from "styled-components";
 
-import {
-  ValidatedFormInputGroup,
-  SuccessToaster,
-  ErrorToaster
-} from "../atoms";
+import { SuccessToaster, ErrorToaster } from "../atoms";
+import { ValidatedFormInputGroup } from "../molecules";
 
 import validateEmail from "../../../utils/validateEmail";
 

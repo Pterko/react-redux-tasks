@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { EditableText } from "@blueprintjs/core";
 
 const convertStatusToText = statusCode => {
   switch (statusCode) {
@@ -12,11 +14,26 @@ const convertStatusToText = statusCode => {
 };
 
 const Task = ({ task }) => {
+  const user = useSelector(state => state.user);
+
+  const renderText = () => {
+    if (!user.isLoggedIn) {
+      return task.text;
+    }
+    return (
+      <EditableText
+        placeholder="Edit report... (controlled, multiline)"
+        value={task.text}
+        multiline
+      />
+    );
+  };
+
   return (
     <tr>
       <td>{task.username}</td>
       <td>{task.email}</td>
-      <td>{task.text}</td>
+      <td>{renderText()}</td>
       <td>{convertStatusToText(task.status)}</td>
     </tr>
   );
