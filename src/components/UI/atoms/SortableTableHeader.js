@@ -6,7 +6,6 @@ const SortableTableHeader = ({
   children,
   className,
   onClick,
-  isSelectedForSorting,
   sortDirection
 }) => {
   return (

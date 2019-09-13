@@ -16,7 +16,7 @@ const TasksTable = ({ className }) => {
   const { isTasksLoading } = tasks;
 
   const handlePageChange = pageNumber => {
-    console.log("handlePageChange:", pageNumber);
+    // console.log("handlePageChange:", pageNumber);
     dispatch(loadTasks(pageNumber));
   };
 
