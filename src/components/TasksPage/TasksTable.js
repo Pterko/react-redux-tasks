@@ -1,0 +1,87 @@
+import React from "react";
+import { HTMLTable, Spinner } from "@blueprintjs/core";
+import { useSelector, useDispatch } from "react-redux";
+import styled from "styled-components";
+
+import { Task, TasksTablePagination } from ".";
+import { loadTasks, changeSort } from "../../store/tasks";
+import { SortableTableHeader } from "../UI/atoms";
+
+const TasksTable = ({ className }) => {
+  const dispatch = useDispatch();
+
+  const tasks = useSelector(state => state.tasks);
+  const pagesCount = Math.ceil(tasks.tasksCount / 3);
+
+  const { isTasksLoading } = tasks;
+
+  const handlePageChange = pageNumber => {
+    console.log("handlePageChange:", pageNumber);
+    dispatch(loadTasks(pageNumber));
+  };
+
+  const handleHeaderClick = headerKey => {
+    return () => {
+      if (tasks.sortField === headerKey) {
+        dispatch(
+          changeSort(headerKey, tasks.sortDirection === "asc" ? "desc" : "asc")
+        );
+      } else {
+        dispatch(changeSort(headerKey, "desc"));
+      }
+    };
+  };
+
+  const getSortDirection = headerKey => {
+    return tasks.sortField === headerKey ? tasks.sortDirection : null;
+  };
+
+  return (
+    <>
+      {isTasksLoading && <Spinner />}
+      {!isTasksLoading && (
+        <>
+          <HTMLTable className={className}>
+            <thead>
+              <tr>
+                <SortableTableHeader
+                  onClick={handleHeaderClick("username")}
+                  sortDirection={getSortDirection("username")}
+                >
+                  Имя пользователя
+                </SortableTableHeader>
+                <SortableTableHeader
+                  onClick={handleHeaderClick("email")}
+                  sortDirection={getSortDirection("email")}
+                >
+                  E-mail
+                </SortableTableHeader>
+                <th>Текст задачи</th>
+                <SortableTableHeader
+                  onClick={handleHeaderClick("status")}
+                  sortDirection={getSortDirection("status")}
+                >
+                  Статус
+                </SortableTableHeader>
+              </tr>
+            </thead>
+            <tbody>
+              {tasks.tasks.map(task => (
+                <Task key={task.id} task={task} />
+              ))}
+            </tbody>
+          </HTMLTable>
+          <TasksTablePagination
+            pagesCount={pagesCount}
+            currentPage={tasks.page}
+            onPageChange={handlePageChange}
+          />
+        </>
+      )}
+    </>
+  );
+};
+
+export default styled(TasksTable)`
+  width: 100%;
+`;
