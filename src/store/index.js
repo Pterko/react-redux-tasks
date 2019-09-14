@@ -18,8 +18,7 @@ const reducer = combineReducers({
 });
 
 const config = {
-  whitelist: ["LOGIN_SUCCESS", "LOGOUT"],
-  broadcastChannelOption: { type: "localstorage" }
+  whitelist: ["LOGIN_SUCCESS", "LOGOUT"]
 };
 
 const middlewares = [
