@@ -6,10 +6,11 @@ const SortableTableHeader = ({
   children,
   className,
   onClick,
-  sortDirection
+  sortDirection,
+  style
 }) => {
   return (
-    <th className={className} onClick={onClick}>
+    <th className={className} onClick={onClick} style={style}>
       {children}
       {sortDirection === "desc" && <Icon icon="caret-down" />}{" "}
       {sortDirection === "asc" && <Icon icon="caret-up" />}

@@ -24,7 +24,7 @@ const Navbar = () => {
     <>
       <BlueprintNavbar>
         <BlueprintNavbar.Group align={Alignment.LEFT}>
-          <BlueprintNavbar.Heading>Список задач</BlueprintNavbar.Heading>
+          <BlueprintNavbar.Heading>Task App</BlueprintNavbar.Heading>
         </BlueprintNavbar.Group>
         <BlueprintNavbar.Group align={Alignment.RIGHT}>
           <Button onClick={() => dispatch(openAddTaskPopup())}>
@@ -39,7 +39,6 @@ const Navbar = () => {
         isOpen={isAddTaskPopupOpen}
         onClose={() => dispatch(closeAddTaskPopup())}
       />
-
       <LoginPopup
         isOpen={isLoginPopupOpen}
         onClose={() => dispatch(closeLoginPopup())}

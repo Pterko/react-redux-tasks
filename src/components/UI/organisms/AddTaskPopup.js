@@ -2,41 +2,27 @@
 import React, { useState } from "react";
 import { Dialog, Classes, Button, Intent } from "@blueprintjs/core";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 
 import { SuccessToaster, ErrorToaster } from "../atoms";
 import { ValidatedFormInputGroup } from "../molecules";
 
-import validateEmail from "../../../utils/validateEmail";
+import { loadTasks } from "../../../store/tasks";
 
 import { addTask } from "../../../api";
 
 const AddTaskPopup = ({ className, isOpen, onClose }) => {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
-  const [isEmailValid, setIsEmailValid] = useState(true);
 
   const [username, setUsername] = useState("");
-  const [isUsernameValid, setIsUsernameValid] = useState(true);
 
   const [text, setText] = useState("");
-  const [isTextValid, setIsTextValid] = useState(true);
 
-  const sendForm = async () => {
+  const sendForm = async e => {
+    e.preventDefault();
     try {
-      if (username.length === 0) {
-        return setIsUsernameValid(false);
-      }
-      setIsUsernameValid(true);
-
-      if (!validateEmail(email)) {
-        return setIsEmailValid(false);
-      }
-      setIsEmailValid(true);
-
-      if (text.length === 0) {
-        return setIsTextValid(false);
-      }
-      setIsTextValid(true);
-
       await addTask(username, email, text);
 
       SuccessToaster.show({
@@ -44,6 +30,8 @@ const AddTaskPopup = ({ className, isOpen, onClose }) => {
         intent: Intent.SUCCESS,
         timeout: 2000
       });
+
+      dispatch(loadTasks());
 
       return onClose();
     } catch (ex) {
@@ -53,6 +41,14 @@ const AddTaskPopup = ({ className, isOpen, onClose }) => {
         timeout: 2000
       });
     }
+    return null;
+  };
+
+  const cleanForm = () => {
+    setUsername("");
+    setEmail("");
+    setText("");
+    return null;
   };
 
   return (
@@ -60,47 +56,48 @@ const AddTaskPopup = ({ className, isOpen, onClose }) => {
       <Dialog
         className={className}
         isOpen={isOpen}
+        onOpening={cleanForm}
         onClose={onClose}
         icon="add"
         title="Добавление новой задачи"
       >
         <div className={Classes.DIALOG_BODY}>
-          <ValidatedFormInputGroup
-            label="Имя пользователя"
-            id="username"
-            placeholder="SuperUser"
-            labelInfo="(обязательно)"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            isValid={isUsernameValid}
-            invalidMessage="Пожалуйста, введите имя пользователя"
-          />
+          <form onSubmit={sendForm}>
+            <ValidatedFormInputGroup
+              label="Имя пользователя"
+              id="username"
+              placeholder="SuperUser"
+              labelInfo="(обязательно)"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              required
+            />
 
-          <ValidatedFormInputGroup
-            label="E-mail"
-            id="e-mail"
-            placeholder="john@acme.org"
-            labelInfo="(обязательно)"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            isValid={isEmailValid}
-            invalidMessage="Пожалуйста, введите правильный e-mail"
-          />
+            <ValidatedFormInputGroup
+              label="E-mail"
+              id="e-mail"
+              placeholder="john@acme.org"
+              labelInfo="(обязательно)"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              type="email"
+            />
 
-          <ValidatedFormInputGroup
-            label="Текст задачи"
-            id="text-input"
-            placeholder="john@acme.org"
-            labelInfo="(обязательно)"
-            value={text}
-            onChange={e => setText(e.target.value)}
-            isValid={isTextValid}
-            invalidMessage="Пожалуйста, введите текст задачи"
-            isTextArea
-          />
-          <Button fill className="add-button" onClick={sendForm}>
-            Добавить задачу
-          </Button>
+            <ValidatedFormInputGroup
+              label="Текст задачи"
+              id="text-input"
+              placeholder="john@acme.org"
+              labelInfo="(обязательно)"
+              value={text}
+              onChange={e => setText(e.target.value)}
+              isTextArea
+              required
+            />
+            <Button fill className="add-button" type="submit">
+              Добавить задачу
+            </Button>
+          </form>
         </div>
       </Dialog>
     </>

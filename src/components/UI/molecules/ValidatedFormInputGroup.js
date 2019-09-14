@@ -1,5 +1,5 @@
 import React from "react";
-import { FormGroup, InputGroup, Intent, TextArea } from "@blueprintjs/core";
+import { FormGroup, InputGroup, TextArea } from "@blueprintjs/core";
 
 const ValidatedFormInputGroup = ({
   label,
@@ -8,27 +8,18 @@ const ValidatedFormInputGroup = ({
   placeholder,
   value,
   onChange,
-  isValid = true,
-  invalidMessage,
   isTextArea,
   type,
   required
 }) => {
   return (
-    <FormGroup
-      label={label}
-      labelFor={id}
-      labelInfo={labelInfo}
-      helperText={isValid ? "" : invalidMessage}
-      intent={isValid ? Intent.NONE : Intent.DANGER}
-    >
+    <FormGroup label={label} labelFor={id} labelInfo={labelInfo}>
       {isTextArea ? (
         <TextArea
           id={id}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          intent={isValid ? Intent.NONE : Intent.DANGER}
           fill
           required={required}
         />
@@ -38,7 +29,6 @@ const ValidatedFormInputGroup = ({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          intent={isValid ? Intent.NONE : Intent.DANGER}
           type={type}
           required={required}
         />

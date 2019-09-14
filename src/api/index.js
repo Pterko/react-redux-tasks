@@ -22,13 +22,15 @@ const validateServerResponse = response => {
   if (response.status === "ok") {
     return response;
   }
+  if (response.status === "error") {
+    throw new Error(response);
+  }
   throw new Error("Server response validation error");
 };
 
 const Fetcher = {
   get: (path, params) => {
     const processedPath = injectDeveloperName(API_BASE_URL + path);
-    console.log("processedPath", processedPath);
     return fetch(processedPath, params)
       .then(checkStatus)
       .then(parseJSON)
@@ -36,7 +38,6 @@ const Fetcher = {
   },
   post: (path, data, params) => {
     const processedPath = injectDeveloperName(API_BASE_URL + path);
-    console.log("processedPath", processedPath);
 
     const formData = new FormData();
 
@@ -59,7 +60,6 @@ export const getTasks = async (page = 0, sortField, sortDirection) => {
   const result = await Fetcher.get(
     `/?page=${page}&sort_field=${sortField}&sort_direction=${sortDirection}`
   );
-  console.log("getTasks", result);
   return result.message;
 };
 
@@ -69,14 +69,22 @@ export const addTask = async (username, email, text) => {
     email,
     text
   });
-  console.log("addTask", result);
 
   return result.message;
 };
 
 export const login = async (username, password) => {
   const result = await Fetcher.post(`/login`, { username, password });
-  console.log("login", result);
+
+  return result.message;
+};
+
+export const editTask = async (token, taskId, text, status) => {
+  const result = await Fetcher.post(`/edit/${taskId}`, {
+    token,
+    status,
+    text
+  });
 
   return result.message;
 };

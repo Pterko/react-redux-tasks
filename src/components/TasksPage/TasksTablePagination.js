@@ -14,9 +14,6 @@ const TasksTablePagination = ({
 
   const rightCounter = pagesCount - currentPage;
 
-  // console.log("leftCounter", leftCounter);
-  // console.log("rightCounter", rightCounter);
-
   const renderButtonIfPossible = (pageNumber, icon) => {
     // we will render icon button ALWAYS because they used for navigation
     if ((pageNumber > 0 && pageNumber <= pagesCount) || icon) {

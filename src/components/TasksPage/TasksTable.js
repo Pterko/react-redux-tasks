@@ -17,7 +17,6 @@ const TasksTable = ({ className }) => {
   const { isTasksLoading } = tasks;
 
   const handlePageChange = pageNumber => {
-    // console.log("handlePageChange:", pageNumber);
     dispatch(loadTasks(pageNumber));
   };
 
@@ -48,19 +47,22 @@ const TasksTable = ({ className }) => {
                 <SortableTableHeader
                   onClick={handleHeaderClick("username")}
                   sortDirection={getSortDirection("username")}
+                  style={{ width: "15%" }}
                 >
                   Имя пользователя
                 </SortableTableHeader>
                 <SortableTableHeader
                   onClick={handleHeaderClick("email")}
                   sortDirection={getSortDirection("email")}
+                  style={{ width: "15%" }}
                 >
                   E-mail
                 </SortableTableHeader>
-                <th>Текст задачи</th>
+                <th style={{ width: "50%" }}>Текст задачи</th>
                 <SortableTableHeader
                   onClick={handleHeaderClick("status")}
                   sortDirection={getSortDirection("status")}
+                  style={{ width: "20%" }}
                 >
                   Статус
                 </SortableTableHeader>
