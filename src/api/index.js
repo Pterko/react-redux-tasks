@@ -18,12 +18,17 @@ const injectDeveloperName = path => {
   return newPath.toString();
 };
 
+function ServerValidateException(payload) {
+  this.payload = payload;
+  this.message = "Запрос к серверу завершился ошибкой";
+}
+
 const validateServerResponse = response => {
   if (response.status === "ok") {
     return response;
   }
   if (response.status === "error") {
-    throw new Error(response);
+    throw new ServerValidateException(response);
   }
   throw new Error("Server response validation error");
 };

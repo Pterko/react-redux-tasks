@@ -153,7 +153,7 @@ export function editTaskSuccess(result, taskId, text, status) {
 export function editTaskFailure(dispatch, errResult) {
   if (errResult && errResult.message && errResult.message.token) {
     ErrorToaster.showIntent({ message: "Пожалуйста, авторизуйтесь." });
-    dispatch(logout());
+    dispatch(logout(false));
   }
   return { type: EDIT_TASK_FAILURE };
 }
@@ -175,7 +175,7 @@ export function editTask(id, text, status) {
         dispatch(editTaskSuccess(result, id, usedText, usedStatus));
       })
       .catch(errResult => {
-        dispatch(editTaskFailure(dispatch, errResult));
+        dispatch(editTaskFailure(dispatch, errResult.payload));
       });
   };
 }
