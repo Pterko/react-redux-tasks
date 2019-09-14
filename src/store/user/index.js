@@ -84,6 +84,7 @@ export function login(username, password) {
 }
 
 export function logout() {
+  SuccessToaster.showIntent({ message: "Выход из аккаунта успешно выполнен" });
   localStorage.removeItem("user_auth_token");
   return { type: LOGOUT };
 }

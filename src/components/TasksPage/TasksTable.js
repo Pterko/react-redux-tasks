@@ -11,7 +11,6 @@ const TasksTable = ({ className }) => {
   const dispatch = useDispatch();
 
   const tasks = useSelector(state => state.tasks);
-  const user = useSelector(state => state.user);
   const pagesCount = Math.ceil(tasks.tasksCount / 3);
 
   const { isTasksLoading } = tasks;
