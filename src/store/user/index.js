@@ -3,7 +3,7 @@ import { login as loginApi } from "../../api";
 import { SuccessToaster, ErrorToaster } from "../../components/UI/atoms";
 // Initial state
 export const userInitialState = {
-  isLoggedIn: !!localStorage.getItem("user_auth_token"),
+  isLoggedIn: Boolean(localStorage.getItem("user_auth_token")),
   isLoginInProgress: false,
   token: localStorage.getItem("user_auth_token") || null,
   isLoginPopupOpen: false
