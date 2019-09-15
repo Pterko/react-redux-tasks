@@ -17,8 +17,8 @@
     "styled-components": "^4.3.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
+    "start": "cross-env NODE_ENV=dev react-scripts start",
+    "build": "cross-env NODE_ENV=prod react-scripts build"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -21,11 +21,11 @@ const config = {
   whitelist: ["LOGIN_SUCCESS", "LOGOUT"]
 };
 
-const middlewares = [
-  thunkMiddleware,
-  logger,
-  createStateSyncMiddleware(config)
-];
+const middlewares = [thunkMiddleware, createStateSyncMiddleware(config)];
+
+if (process.env.NODE_ENV === "dev") {
+  middlewares.push(logger);
+}
 
 const makeStore = (initState = initialState) => {
   return createStore(
