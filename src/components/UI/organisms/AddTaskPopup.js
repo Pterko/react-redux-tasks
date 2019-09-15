@@ -35,6 +35,17 @@ const AddTaskPopup = ({ className, isOpen, onClose }) => {
 
       return onClose();
     } catch (ex) {
+      const errMessage = ex.payload.message;
+      if (Object.keys(errMessage).length > 0) {
+        return Object.keys(errMessage).map(key =>
+          ErrorToaster.show({
+            message: errMessage[key],
+            intent: Intent.DANGER,
+            timeout: 2000
+          })
+        );
+      }
+
       ErrorToaster.show({
         message: "Возникла непредвиденная ошибка",
         intent: Intent.DANGER,
